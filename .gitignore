@@ -1,0 +1,19 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Environment secrets
+.env
+
+# Test artifacts
+small.txt
+huge.bin
+test.txt
+*.jpg
+*.jpeg
+!frontend/**
+dropforge-test-download.jpg
+
+# OS
+.DS_Store
