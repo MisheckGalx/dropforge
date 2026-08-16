@@ -1,48 +1,54 @@
-<svg width="100%" viewBox="0 0 680 460" xmlns="http://www.w3.org/2000/svg" role="img">
-<title>DropForge architecture</title>
-<desc>Browser requests a presigned URL from the FastAPI backend, which uses scoped IAM credentials to sign it, then the browser uploads the file directly to S3.</desc>
-<defs>
-<marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
-</defs>
+<svg width="1400" height="620" viewBox="0 0 1400 620" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI', -apple-system, Helvetica, Arial, sans-serif">
+  <rect width="1400" height="620" fill="#ffffff"/>
 
-<g class="node c-gray">
-<rect x="40" y="40" width="160" height="56" rx="8" stroke-width="0.5"/>
-<text class="th" x="120" y="60" text-anchor="middle" dominant-baseline="central">Browser</text>
-<text class="ts" x="120" y="80" text-anchor="middle" dominant-baseline="central">index.html</text>
-</g>
+  <!-- Label above the IAM-scoped arrow -->
+  <text x="900" y="150" font-size="26" fill="#444444" text-anchor="middle">IAM scopes this identity to one bucket only</text>
 
-<g class="node c-blue">
-<rect x="260" y="40" width="180" height="56" rx="8" stroke-width="0.5"/>
-<text class="th" x="350" y="60" text-anchor="middle" dominant-baseline="central">FastAPI backend</text>
-<text class="ts" x="350" y="80" text-anchor="middle" dominant-baseline="central">main.py</text>
-</g>
+  <!-- Arrow marker -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#8a8a8a"/>
+    </marker>
+  </defs>
 
-<g class="node c-purple">
-<rect x="480" y="40" width="160" height="56" rx="8" stroke-width="0.5"/>
-<text class="th" x="560" y="60" text-anchor="middle" dominant-baseline="central">IAM user</text>
-<text class="ts" x="560" y="80" text-anchor="middle" dominant-baseline="central">dropforge-app</text>
-</g>
+  <!-- Client box -->
+  <rect x="60" y="220" width="260" height="150" rx="18" fill="#f0ece1" stroke="#e0dbcb" stroke-width="1.5"/>
+  <text x="190" y="285" font-size="30" font-weight="700" fill="#333333" text-anchor="middle">Client</text>
+  <text x="190" y="325" font-size="22" fill="#555555" text-anchor="middle">Browser upload UI</text>
 
-<line x1="200" y1="68" x2="258" y2="68" class="arr" marker-end="url(#arrow)"/>
-<text class="ts" x="229" y="52" text-anchor="middle">1. POST /upload-url</text>
+  <!-- Arrow 1 -->
+  <line x1="320" y1="295" x2="440" y2="295" stroke="#8a8a8a" stroke-width="3" marker-end="url(#arrowhead)"/>
 
-<line x1="440" y1="68" x2="478" y2="68" class="arr" marker-end="url(#arrow)"/>
-<text class="ts" x="459" y="52" text-anchor="middle">2. sign</text>
+  <!-- Backend box -->
+  <rect x="450" y="220" width="300" height="150" rx="18" fill="#e3edfb" stroke="#c9dbf5" stroke-width="1.5"/>
+  <text x="600" y="285" font-size="30" font-weight="700" fill="#1a4fa0" text-anchor="middle">FastAPI backend</text>
+  <text x="600" y="325" font-size="22" fill="#3a6ac0" text-anchor="middle">Signs presigned URLs</text>
 
-<g class="c-teal">
-<rect x="180" y="200" width="320" height="220" rx="20" stroke-width="0.5"/>
-<text class="th" x="200" y="230">Amazon S3</text>
-<text class="ts" x="200" y="248">dropforge-mukanya-2026 (private)</text>
-</g>
+  <!-- Arrow 2 -->
+  <line x1="750" y1="295" x2="870" y2="295" stroke="#8a8a8a" stroke-width="3" marker-end="url(#arrowhead)"/>
 
-<g class="c-coral">
-<rect x="210" y="280" width="260" height="60" rx="10" stroke-width="0.5"/>
-<text class="th" x="340" y="302" text-anchor="middle" dominant-baseline="central">uploads/YYYY/MM/DD/</text>
-<text class="ts" x="340" y="320" text-anchor="middle" dominant-baseline="central">object stored by key</text>
-</g>
+  <!-- IAM box (branch, like CloudWatch in reference) -->
+  <rect x="580" y="450" width="300" height="150" rx="18" fill="#f0ece1" stroke="#e0dbcb" stroke-width="1.5"/>
+  <text x="730" y="515" font-size="28" font-weight="700" fill="#333333" text-anchor="middle">IAM</text>
+  <text x="730" y="550" font-size="20" fill="#555555" text-anchor="middle">dropforge-app, scoped creds</text>
 
-<path d="M120 96 V150 Q120 170 160 170 H460 Q500 170 500 190" fill="none" stroke="var(--t)" stroke-width="0.5" class="arr" marker-end="url(#arrow)"/>
-<text class="ts" x="340" y="164" text-anchor="middle">3. PUT / POST file bytes directly (presigned URL)</text>
+  <!-- Vertical arrow backend -> IAM -->
+  <line x1="600" y1="370" x2="640" y2="448" stroke="#8a8a8a" stroke-width="3" marker-end="url(#arrowhead)"/>
 
-<text class="ts" x="340" y="440" text-anchor="middle">File bytes never pass through the FastAPI server</text>
+  <!-- S3 box -->
+  <rect x="880" y="220" width="300" height="150" rx="18" fill="#e0f3ea" stroke="#c3e8d6" stroke-width="1.5"/>
+  <text x="1030" y="285" font-size="30" font-weight="700" fill="#166c43" text-anchor="middle">Amazon S3</text>
+  <text x="1030" y="325" font-size="22" fill="#2a8f5f" text-anchor="middle">Private bucket</text>
+
+  <!-- Arrow S3 -> objects -->
+  <line x1="1030" y1="370" x2="1030" y2="448" stroke="#8a8a8a" stroke-width="3" marker-end="url(#arrowhead)"/>
+
+  <!-- Objects box -->
+  <rect x="880" y="450" width="300" height="150" rx="18" fill="#fbe9e0" stroke="#f3d3c0" stroke-width="1.5"/>
+  <text x="1030" y="515" font-size="28" font-weight="700" fill="#a3401a" text-anchor="middle">Objects</text>
+  <text x="1030" y="550" font-size="20" fill="#c05a2e" text-anchor="middle">uploads/YYYY/MM/DD/</text>
+
+  <!-- direct upload arrow, curved, from Client to S3 -->
+  <path d="M 190 220 C 190 60, 1030 60, 1030 218" fill="none" stroke="#8a8a8a" stroke-width="3" stroke-dasharray="8 6" marker-end="url(#arrowhead)"/>
+  <text x="610" y="55" font-size="24" fill="#444444" text-anchor="middle">Direct upload — file bytes never touch the backend</text>
 </svg>
